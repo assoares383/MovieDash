@@ -25,13 +25,14 @@ Este documento descreve o fluxo completo do MovieDash, desde o bootstrap até a 
 ## 4. Carregamento de dados na feature
 
 1. O composable [src/features/movies/composables/useMovieFilters.ts](src/features/movies/composables/useMovieFilters.ts) é chamado na página da feature.
-2. No `onMounted`, ele executa `getMovies` do service [src/features/movies/services/movieApi.ts](src/features/movies/services/movieApi.ts).
-3. O service faz `fetch('/api/movies')`.
-4. A resposta é adaptada pelo adapter [src/features/movies/adapters/movieAdapter.ts](src/features/movies/adapters/movieAdapter.ts).
-5. O estado interno do composable é atualizado:
-   - `movies`
+2. O composable usa `useQuery` (TanStack Query) com `queryKey` centralizada em [src/features/movies/queries/movieQueryKeys.ts](src/features/movies/queries/movieQueryKeys.ts).
+3. A query executa `getMovies` do service [src/features/movies/services/movieApi.ts](src/features/movies/services/movieApi.ts).
+4. O service faz `fetch('/api/movies')`.
+5. A resposta é adaptada pelo adapter [src/features/movies/adapters/movieAdapter.ts](src/features/movies/adapters/movieAdapter.ts).
+6. O composable expõe estados reativos da query para a página:
    - `isLoading`
    - `hasError`
+   - `movies` (via `data`)
 
 ## 5. Filtros
 

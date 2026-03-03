@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@primeuix/themes": "^2.0.3",
+    "@tanstack/vue-query": "^5.92.9",
     "miragejs": "^0.1.48",
     "primeicons": "^7.0.0",
     "primevue": "^4.5.4",

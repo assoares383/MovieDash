@@ -3,6 +3,7 @@
 Projeto Vue 3 com Vite contendo:
 
 - PrimeVue + PrimeIcons
+- TanStack Query (Vue)
 - Tailwind CSS
 - Tema customizado de UI
 - Filtros de filmes por nome, categoria e data de estreia
@@ -125,6 +126,23 @@ Resultado prático:
 - menor JavaScript inicial no carregamento da aplicação
 - distribuição dos módulos pesados em chunks menores
 - build de produção sem warning de chunk acima de 500 kB
+
+## TanStack Query
+
+O `VueQueryPlugin` está configurado globalmente em `src/main.ts` com `QueryClient`.
+
+Exemplo de uso em composable:
+
+```ts
+import { useQuery } from '@tanstack/vue-query'
+import { movieQueryKeys } from '@/features/movies'
+import { getMovies } from '@/features/movies/services/movieApi'
+
+const query = useQuery({
+  queryKey: movieQueryKeys.list(),
+  queryFn: getMovies,
+})
+```
 
 ## Documentação detalhada
 

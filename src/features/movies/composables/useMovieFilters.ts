@@ -1,11 +1,14 @@
-import { computed, onMounted, ref } from 'vue'
+import { useQuery } from '@tanstack/vue-query'
+import { computed, ref } from 'vue'
+import { movieQueryKeys } from '@/features/movies/queries/movieQueryKeys'
 import { getMovies } from '@/features/movies/services/movieApi'
 import type { Movie, MovieFiltersState } from '@/features/movies/types'
 
 export const useMovieFilters = () => {
-  const movies = ref<Movie[]>([])
-  const isLoading = ref(false)
-  const hasError = ref(false)
+  const moviesQuery = useQuery<Movie[]>({
+    queryKey: movieQueryKeys.list(),
+    queryFn: getMovies,
+  })
 
   const filters = ref<MovieFiltersState>({
     film: '',
@@ -13,23 +16,14 @@ export const useMovieFilters = () => {
     releaseDate: null,
   })
 
+  const movies = computed<Movie[]>(() => moviesQuery.data.value ?? [])
+  const isLoading = computed<boolean>(() => moviesQuery.isLoading.value)
+  const hasError = computed<boolean>(() => moviesQuery.isError.value)
+  const hasData = computed<boolean>(() => movies.value.length > 0)
+
   const categories = computed<string[]>(() => {
     return [...new Set(movies.value.map((movie) => movie.category))]
   })
-
-  const loadMovies = async () => {
-    isLoading.value = true
-    hasError.value = false
-
-    try {
-      movies.value = await getMovies()
-    } catch {
-      hasError.value = true
-      movies.value = []
-    } finally {
-      isLoading.value = false
-    }
-  }
 
   const filteredMovies = computed<Movie[]>(() => {
     return movies.value.filter((movie) => {
@@ -44,13 +38,12 @@ export const useMovieFilters = () => {
     })
   })
 
-  onMounted(loadMovies)
-
   return {
     filters,
     categories,
     filteredMovies,
     isLoading,
     hasError,
+    hasData,
   }
 }

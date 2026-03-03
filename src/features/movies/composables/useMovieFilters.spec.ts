@@ -1,4 +1,5 @@
 import { defineComponent } from 'vue'
+import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query'
 import { mount, flushPromises } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { useMovieFilters } from './useMovieFilters'
@@ -46,6 +47,15 @@ const createHarness = () =>
     template: '<div />',
   })
 
+const createQueryClient = () =>
+  new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  })
+
 describe('useMovieFilters', () => {
   afterEach(() => {
     vi.clearAllMocks()
@@ -54,7 +64,11 @@ describe('useMovieFilters', () => {
   it('carrega filmes com sucesso no mounted', async () => {
     getMoviesMock.mockResolvedValue(baseMovies)
 
-    const wrapper = mount(createHarness())
+    const wrapper = mount(createHarness(), {
+      global: {
+        plugins: [[VueQueryPlugin, { queryClient: createQueryClient() }]],
+      },
+    })
     await flushPromises()
 
     const vm = wrapper.vm as any
@@ -67,7 +81,11 @@ describe('useMovieFilters', () => {
   it('marca erro quando o carregamento falha', async () => {
     getMoviesMock.mockRejectedValue(new Error('falha'))
 
-    const wrapper = mount(createHarness())
+    const wrapper = mount(createHarness(), {
+      global: {
+        plugins: [[VueQueryPlugin, { queryClient: createQueryClient() }]],
+      },
+    })
     await flushPromises()
 
     const vm = wrapper.vm as any
@@ -80,7 +98,11 @@ describe('useMovieFilters', () => {
   it('aplica filtros por filme, categoria e data', async () => {
     getMoviesMock.mockResolvedValue(baseMovies)
 
-    const wrapper = mount(createHarness())
+    const wrapper = mount(createHarness(), {
+      global: {
+        plugins: [[VueQueryPlugin, { queryClient: createQueryClient() }]],
+      },
+    })
     await flushPromises()
 
     const vm = wrapper.vm as any

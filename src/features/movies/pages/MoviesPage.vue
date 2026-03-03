@@ -7,7 +7,7 @@ import { useMovieFilters } from '@/features/movies/composables/useMovieFilters'
 import AppLoader from '@/shared/components/AppLoader.vue'
 import type { Movie } from '@/features/movies/types'
 
-const { filters, categories, filteredMovies, isLoading, hasError } = useMovieFilters()
+const { filters, categories, filteredMovies, isLoading, hasError, hasData } = useMovieFilters()
 
 const pageState = ref({
   first: 0,
@@ -59,9 +59,14 @@ const updateRows = (value: number) => {
       </section>
 
       <section class="rounded-2xl bg-white p-5 shadow-sm dark:bg-surface-900">
-        <AppLoader v-if="isLoading" label="Carregando filmes..." />
-        <p v-else-if="hasError" class="text-sm text-red-600">Erro ao carregar os filmes.</p>
+        <AppLoader v-if="isLoading && !hasData" label="Carregando filmes..." />
+        <p v-else-if="hasError && !hasData" class="text-sm text-red-600">
+          Erro ao carregar os filmes.
+        </p>
         <div v-else class="flex flex-col gap-4">
+          <p v-if="hasError && hasData" class="text-sm text-red-600">
+            Não foi possível atualizar os filmes. Exibindo dados em cache.
+          </p>
           <MovieDataTable :movies="paginatedMovies" />
           <MoviesPagination
             :first="pageState.first"

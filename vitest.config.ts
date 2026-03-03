@@ -18,6 +18,7 @@ export default defineConfig({
       include: [
         'src/features/movies/adapters/**/*.ts',
         'src/features/movies/builders/**/*.ts',
+        'src/features/movies/components/**/*.vue',
         'src/features/movies/composables/**/*.ts',
         'src/features/movies/factories/**/*.ts',
         'src/features/movies/services/**/*.ts',

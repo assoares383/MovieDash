@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query'
 import PrimeVue from 'primevue/config'
 import 'primeicons/primeicons.css'
 import './style.css'
@@ -14,6 +15,21 @@ if (import.meta.env.DEV) {
 }
 
 const app = createApp(App)
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5,
+      gcTime: 1000 * 60 * 30,
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+})
+
+app.use(VueQueryPlugin, {
+  queryClient,
+})
 
 app.use(PrimeVue, {
   theme: {
