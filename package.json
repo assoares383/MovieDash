@@ -1,0 +1,50 @@
+{
+  "name": "moviedash",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier . --write",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@primeuix/themes": "^2.0.3",
+    "miragejs": "^0.1.48",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.5.4",
+    "vue": "^3.5.18"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.4.2",
+    "@commitlint/config-conventional": "^20.4.2",
+    "@eslint/js": "^10.0.1",
+    "@tailwindcss/postcss": "^4.2.1",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vitest/coverage-v8": "^4.0.18",
+    "@vue/test-utils": "^2.4.6",
+    "eslint": "^10.0.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^10.8.0",
+    "globals": "^17.4.0",
+    "husky": "^9.1.7",
+    "jsdom": "^28.1.0",
+    "lint-staged": "^16.3.1",
+    "postcss": "^8.5.8",
+    "prettier": "^3.8.1",
+    "tailwindcss": "^4.2.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.0",
+    "vitest": "^4.0.18",
+    "vue-tsc": "^2.1.10"
+  }
+}

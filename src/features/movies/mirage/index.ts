@@ -1,0 +1,1 @@
+export { makeMoviesServer } from './server'
